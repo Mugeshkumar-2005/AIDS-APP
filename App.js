@@ -6,6 +6,7 @@ import DashboardScreen from './screens/DashboardScreen';
 import TaskManagementScreen from './screens/TaskManagementScreen';
 import ReportsScreen from './screens/ReportsScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import ProfileScreen from './screens/ProfileScreen';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ export default function App() {
         <Stack.Screen name="Dashboard" component={DashboardScreen} options={{headerShown:false}} />
         <Stack.Screen name="TaskManagement" component={TaskManagementScreen} />
         <Stack.Screen name="Reports" component={ReportsScreen} />
+        <Stack.Screen name="Profile" component={ProfileScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
