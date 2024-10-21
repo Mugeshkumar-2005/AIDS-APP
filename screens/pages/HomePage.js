@@ -24,6 +24,14 @@ const HomePage = () => {
           in delivering a high-quality education to equip students with the necessary skills to navigate 
           the dynamic and ever-changing domains of AI & DS, AI & ML, Cyber Security, and IoT.
         </Text>
+
+      <View style={styles.header}>
+        <Image 
+          source={require('../../assets/SKCT-College-Campus-11.jpg')} 
+          style={styles.logo} 
+        />
+      </View>
+      
         <Text style={styles.text}>
           The program has been strategically developed to cultivate creativity, critical thinking, and 
           problem-solving aptitudes, equipping our graduates with the necessary capabilities to contribute 
@@ -34,6 +42,8 @@ const HomePage = () => {
           educational setting for our students.
         </Text>
       </View>
+
+
       <View style={styles.vision}>
         <Text style={styles.subTitle1}>Vision</Text>
         <Text style={styles.text}>To build up a center of excellence in the extensive field of Artificial Intelligence by addressing the 
@@ -53,7 +63,7 @@ const HomePage = () => {
       <View style={styles.buttons}>
         <Button 
           title="View Staff"
-          onPress={() => navigation.navigate('View Staff')}
+          onPress={() => navigation.navigate('ViewStaff')}
         />
         <Button 
           title="Contact Us"
@@ -91,10 +101,11 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   title: {
-    fontSize: 24,
+    fontSize: 34,
     fontWeight: 'bold',
     textAlign: 'center',
     marginVertical: 10,
+    borderBottomWidth:1,
   },
   infoSection: {
     marginBottom: 20,

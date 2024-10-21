@@ -5,8 +5,7 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Example hardcoded credentials (replace this with actual API logic or backend check)
-  const validEmail = 'user123@gmail.com';
+  const validEmail = 'user123@skct.edu.in';
   const validPassword = 'password123';
 
   const handleLogin = () => {
@@ -17,14 +16,14 @@ const LoginScreen = ({ navigation }) => {
     }
   };
 
-  // Placeholder for Google Sign In logic
+
   const handleGoogleSignIn = () => {
     Alert.alert('Google Sign In', 'Google Sign In feature to be implemented');
   };
 
   return (
     <View style={styles.container}>
-      {/* College logo */}
+     
       <Text style={styles.title}>Sri Krishna College Of Technology</Text>
       <Image source={require('../assets/clg.png')} style={styles.logo} />
       <Text style={styles.subtitle}>Department of AI & DS</Text>

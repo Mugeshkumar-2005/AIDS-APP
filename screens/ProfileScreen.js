@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker'; // Import ImagePicker for image selection
 
-const ProfileScreen = ({ navigation }) => {
-  
-  const [name, setName] = useState('John Doe');
-  const [email, setEmail] = useState('johndoe@example.com');
-  const [profileImage, setProfileImage] = useState(null); 
-  const pickImage = async () => {
+const ProfileScreen = ({ navigation, route }) => {
+  const [name, setName] = useState(route.params?.name ||'John Doe');
+  const [email, setEmail] = useState(route.params?.email ||'johndoe@example.com');
+  const [profileImage, setProfileImage] = useState(route.params?.currentImage || null); // Use passed image if available
 
+  const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (!permissionResult.granted) {
       alert('Permission to access gallery is required!');
       return;
     }
+
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -23,16 +23,17 @@ const ProfileScreen = ({ navigation }) => {
     });
 
     if (!result.canceled) {
-      setProfileImage(result.assets[0].uri); 
+      setProfileImage(result.assets[0].uri); // Set the selected image URI
+      console.log("Selected image URI:", result.assets[0].uri); // Log the selected image URI for debugging
     }
   };
 
   const handleSave = () => {
+    navigation.navigate('Dashboard', { updatedProfileImage: profileImage });
     alert('Profile updated!');
   };
 
   const handleLogout = () => {
-    
     navigation.navigate('Login'); 
   };
 
@@ -49,7 +50,6 @@ const ProfileScreen = ({ navigation }) => {
         </View>
       </TouchableOpacity>
 
-      
       <View style={styles.form}>
         <Text style={styles.label}>Name:</Text>
         <TextInput 
@@ -68,7 +68,6 @@ const ProfileScreen = ({ navigation }) => {
         <Button title="Save Profile" onPress={handleSave} />
       </View>
 
-      
       <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
         <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>

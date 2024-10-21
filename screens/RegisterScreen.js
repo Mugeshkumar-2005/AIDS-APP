@@ -91,4 +91,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default RegisterScreen;  // Make sure it's correctly exported
+export default RegisterScreen; 

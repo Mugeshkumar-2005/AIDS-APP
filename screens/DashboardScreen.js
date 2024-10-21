@@ -153,6 +153,9 @@ const DashboardScreen = ({ route, navigation }) => {
   const handleReportsPress = () => {
     navigation.navigate('Reports');
   };
+  const handleBookPress = () => {
+    navigation.navigate('Book');
+  };
 
   return (
     <View style={styles.container}>
@@ -173,6 +176,9 @@ const DashboardScreen = ({ route, navigation }) => {
       <View style={styles.navbar2}>
         <TouchableOpacity onPress={handleTaskManagementPress} style={styles.touchable}>
           <Icon name="tasks" size={30} color="white" style={styles.touchableButton} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleBookPress} style={styles.touchable}>
+          <Icon name="book" size={30} color="white" style={styles.touchableButton} />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleReportsPress} style={styles.touchable}>
           <Icon name="bell" size={30} color="white" style={styles.touchableButton}/>
@@ -199,7 +205,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f8f8',    
     borderBottomWidth: 1,          
     borderBottomColor: '#ddd',    
-    paddingTop: 20,
+    paddingTop: 30,
    
   },
   logo: {
@@ -232,9 +238,9 @@ const styles = StyleSheet.create({
   navbar2: {
     justifyContent: 'space-around',
     flexDirection: 'row',
-    margin: 10,
+    margin: 20,
     backgroundColor: 'darkblue',    
-    borderRadius: 30,        
+    borderRadius: 30,
   },
   touchable: {
     alignItems: 'center', 
