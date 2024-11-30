@@ -9,7 +9,12 @@ import ReportsScreen from './screens/ReportsScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import ViewStaff from './screens/pages/ViewStaff';
-
+import Contact from './screens/pages/Contact';
+import AdminDashboard from './screens/admin/AdminDashboard';
+import AdminAttendance from './screens/admin/AdminAttendance';
+import AdminStudent from './screens/admin/AdminStudent';
+import AdminStaff from './screens/admin/AdminStaff';
+import AdminNotifications from './screens/admin/AdminNotification';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -24,6 +29,12 @@ export default function App() {
         <Stack.Screen name="Reports" component={ReportsScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen}/>
         <Stack.Screen name="ViewStaff" component={ViewStaff}/>
+        <Stack.Screen name="Contact" component={Contact}/>
+        <Stack.Screen name="AdminDashboard" component={AdminDashboard}  options={{headerShown:false}}/>
+        <Stack.Screen name="AdminAttendance" component={AdminAttendance}/>
+        <Stack.Screen name="AdminStudent" component={AdminStudent}/>
+        <Stack.Screen name="AdminStaff" component={AdminStaff}/>
+        <Stack.Screen name="AdminNotifications" component={AdminNotifications}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
