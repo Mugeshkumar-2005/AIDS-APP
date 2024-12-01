@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, Alert, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, Alert, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -38,12 +39,22 @@ const LoginScreen = ({ navigation }) => {
     Alert.alert('Google Sign In', 'Google Sign In feature to be implemented');
   };
 
+  const handleFacebookSignIn = () => {
+    Alert.alert('Facebook Sign In', 'Facebook Sign In feature to be implemented');
+  };
+
+  const handleGitHubSignIn = () => {
+    Alert.alert('GitHub Sign In', 'GitHub Sign In feature to be implemented');
+  };
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sri Krishna College Of Technology</Text>
       <Image source={require('../assets/clg.png')} style={styles.logo} />
       <Text style={styles.subtitle}>Department of AI & DS</Text>
-
+      
+      <View style={styles.cardContainer}>
       {/* Toggle Login Mode */}
       <TouchableOpacity onPress={toggleLoginMode}>
         <Text style={styles.adminLink}>
@@ -52,6 +63,8 @@ const LoginScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       <Text style={styles.label}>{isAdmin ? 'Admin Email' : 'Email'}:</Text>
+      <View style={styles.inputContainer}>
+      <Icon name="envelope" size={20} color="black" style={styles.icon1} />
       <TextInput
         style={styles.input}
         value={email}
@@ -59,8 +72,11 @@ const LoginScreen = ({ navigation }) => {
         placeholder={`Enter your ${isAdmin ? 'admin' : 'user'} email`}
         keyboardType="email-address"
       />
+      </View>
 
       <Text style={styles.label}>{isAdmin ? 'Admin Password' : 'Password'}:</Text>
+      <View style={styles.inputContainer}>
+      <Icon name="lock" size={20} color="black" style={styles.icon1} />
       <TextInput
         style={styles.input}
         value={password}
@@ -68,12 +84,29 @@ const LoginScreen = ({ navigation }) => {
         placeholder="Enter your password"
         secureTextEntry
       />
+      </View>
 
-      <Button title="Login" onPress={handleLogin} />
-
-      <TouchableOpacity style={styles.googleButton} onPress={handleGoogleSignIn}>
-        <Text style={styles.googleButtonText}>Sign In with Google</Text>
+      {/* <Button title="Login" onPress={handleLogin} /> */}
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+          <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
+      </View>
+
+      <View style={styles.socialButtonsContainer}>
+      <TouchableOpacity style={styles.googleButton} onPress={handleGoogleSignIn}>
+        <Image source={require('../assets/google.png')} style={styles.icon} />
+      </TouchableOpacity>
+
+      {/* Facebook Sign In Button with Logo */}
+      <TouchableOpacity style={styles.googleButton} onPress={handleFacebookSignIn}>
+        <Image source={require('../assets/fb.png')} style={styles.icon} />
+      </TouchableOpacity>
+
+      {/* GitHub Sign In Button with Logo */}
+      <TouchableOpacity style={styles.googleButton} onPress={handleGitHubSignIn}>
+        <Image source={require('../assets/github_PNG40.png')} style={styles.icon} />
+      </TouchableOpacity>
+      </View>
 
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
         <Text style={styles.registerButtonText}>New? Register Here</Text>
@@ -97,8 +130,9 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   title: {
-    fontSize: 24,
+    fontSize: 34,
     fontWeight: 'bold',
+    marginTop: 40,
     marginBottom: 10,
     textAlign: 'center',
   },
@@ -121,28 +155,67 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   input: {
+    flex: 1,
+    height: 40,
+  },
+  icon: {
+    width: 44,
+    height: 44,
+  },
+  icon1: {
+      padding:5,
+      marginLeft:10,
+      marginRight: 2,
+  },
+  socialButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
     width: '100%',
-    borderWidth: 1,
-    padding: 10,
-    marginVertical: 10,
-    borderRadius: 20,
+    marginTop: 10,
+    marginBottom:10,
   },
   googleButton: {
-    backgroundColor: '#DB4437',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
     marginTop: 15,
-  },
-  googleButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
   registerButtonText: {
     color: '#0066cc',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  cardContainer: {
+    width: '100%',  
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5, 
+    alignItems: 'center',
+  },
+  loginButton: {
+    width: '100%',
+    padding: 10,
+    backgroundColor: '#0066cc',
+    borderRadius: 20,
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    borderWidth: 2,
+    padding: 5,
+    marginVertical: 10,
+    borderRadius: 20,
+    borderColor: '#0066cc',
   },
 });
 

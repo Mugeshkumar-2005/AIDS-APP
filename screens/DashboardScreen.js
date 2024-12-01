@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     flexDirection: 'row',
     margin: 20,
-    backgroundColor: 'darkblue',    
+    backgroundColor: '#0066cc',    
     borderRadius: 30,
   },
   touchable: {

@@ -42,6 +42,9 @@ const DashboardScreen = ({ route, navigation }) => {
         </View>
       </View>
 
+      <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
+      <Text style={styles.menuIcon}>☰</Text>
+      </TouchableOpacity>
       <View style={styles.content}>
         <Image
           source={require("../../assets/SKCT-College-Campus-12.jpg")}
@@ -106,11 +109,6 @@ const DashboardScreen = ({ route, navigation }) => {
           </TouchableOpacity>
         </Modal>
       )}
-
-      {/* Profile Button */}
-      <TouchableOpacity onPress={toggleMenu} style={styles.profileContainer}>
-        <Image source={profileImage} style={styles.profileImage} />
-      </TouchableOpacity>
     </View>
   );
 };
@@ -187,13 +185,16 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
   },
-  profileContainer: {
-    padding: 5,   
+  menuButton: {
+    position: 'absolute',
+    top: 120,              // Adjust for spacing from the top of the navbar
+    right: 15,            // Align to the right side of the screen
+    padding: 10, 
   },
-  profileImage: {
-    width: 40,    
-    height: 40,  
-    borderRadius: 20, 
+  menuIcon: {
+    fontSize: 24,             // Icon size
+    color: '#333',            // Icon color
+    fontWeight: 'bold',       // Make it stand out
   },
   overlay: {
     flex: 1,

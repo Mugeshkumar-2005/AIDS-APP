@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet, Alert, Image, TouchableOpacity } from 'react-native';
+import { View, TextInput,  Text, StyleSheet, Alert, Image, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -31,12 +32,25 @@ const RegisterScreen = ({ navigation }) => {
     setIsAdmin(!isAdmin); 
   };
 
+  const handleGoogleSignIn = () => {
+    Alert.alert('Google Sign In', 'Google Sign In feature to be implemented');
+  };
+
+  const handleFacebookSignIn = () => {
+    Alert.alert('Facebook Sign In', 'Facebook Sign In feature to be implemented');
+  };
+
+  const handleGitHubSignIn = () => {
+    Alert.alert('GitHub Sign In', 'GitHub Sign In feature to be implemented');
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sri Krishna College Of Technology</Text>
       <Image source={require('../assets/clg.png')} style={styles.logo} />
       <Text style={styles.subtitle}>Department of AI & DS</Text>
 
+      <View style={styles.cardContainer}>
       {/* Toggle between User and Admin Registration */}
       <TouchableOpacity onPress={toggleRegisterMode}>
         <Text style={styles.adminLink}>
@@ -46,13 +60,19 @@ const RegisterScreen = ({ navigation }) => {
 
       <Text>{isAdmin ? 'Admin Register' : 'Register'}</Text>
 
+      
+      <View style={styles.inputContainer}>
+      <Icon name="user" size={20} color="black" style={styles.icon1} /> 
       <TextInput
         style={styles.input}
         value={name}
         onChangeText={setName}
         placeholder="Enter your name"
       />
+      </View>
 
+      <View style={styles.inputContainer}>
+      <Icon name="envelope" size={20} color="black" style={styles.icon1} /> 
       <TextInput
         style={styles.input}
         value={email}
@@ -60,7 +80,10 @@ const RegisterScreen = ({ navigation }) => {
         placeholder={isAdmin ? 'Enter admin email' : 'Enter user email'}
         keyboardType="email-address"
       />
+      </View>
 
+      <View style={styles.inputContainer}>
+      <Icon name="lock" size={20} color="black" style={styles.icon1} />
       <TextInput
         style={styles.input}
         value={password}
@@ -68,7 +91,10 @@ const RegisterScreen = ({ navigation }) => {
         placeholder="Enter your password"
         secureTextEntry
       />
+      </View>
 
+      <View style={styles.inputContainer}>
+      <Icon name="lock" size={20} color="black" style={styles.icon1} />
       <TextInput
         style={styles.input}
         value={confirmPassword}
@@ -76,8 +102,27 @@ const RegisterScreen = ({ navigation }) => {
         placeholder="Confirm your password"
         secureTextEntry
       />
+      </View>
+      <TouchableOpacity style={styles.RegisterButton} onPress={handleRegister}>
+          <Text style={styles.RegisterButtonText}>Register</Text>
+      </TouchableOpacity>
+      </View>
 
-      <Button title="Register" onPress={handleRegister} />
+      <View style={styles.socialButtonsContainer}>
+      <TouchableOpacity style={styles.googleButton} onPress={handleGoogleSignIn}>
+        <Image source={require('../assets/google.png')} style={styles.icon} />
+      </TouchableOpacity>
+
+      {/* Facebook Sign In Button with Logo */}
+      <TouchableOpacity style={styles.googleButton} onPress={handleFacebookSignIn}>
+        <Image source={require('../assets/fb.png')} style={styles.icon} />
+      </TouchableOpacity>
+
+      {/* GitHub Sign In Button with Logo */}
+      <TouchableOpacity style={styles.googleButton} onPress={handleGitHubSignIn}>
+        <Image source={require('../assets/github_PNG40.png')} style={styles.icon} />
+      </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -88,13 +133,11 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop:30,
   },
   input: {
-    width: '100%',
-    borderWidth: 1,
-    padding: 10,
-    marginVertical: 10,
-    borderRadius: 30,
+    flex: 1,
+    height: 40,
   },
   title: {
     fontSize: 24,
@@ -105,7 +148,26 @@ const styles = StyleSheet.create({
   logo: {
     width: 150,
     height: 150,
-    marginBottom: 30,
+    marginBottom: 10,
+  },
+  icon: {
+    width: 44,
+    height: 44,
+  },
+  icon1: {
+    padding:5,
+    marginLeft:10,
+    marginRight: 2,
+},
+  googleButton: {
+    marginTop: 15,
+  },
+  socialButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: '100%',
+    marginTop: 5,
+    marginBottom:10,
   },
   subtitle: {
     fontSize: 15,
@@ -117,7 +179,41 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 20,
     textAlign: 'center',
-    color: '#0066cc',
+  },
+  RegisterButton: {
+    width: '100%',
+    padding: 10,
+    backgroundColor: '#0066cc',
+    borderRadius: 20,
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  RegisterButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  cardContainer: {
+    width: '100%',  
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 5, 
+    alignItems: 'center',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    borderWidth: 2,
+    padding: 5,
+    marginVertical: 10,
+    borderRadius: 20,
+    borderColor: '#0066cc',
   },
 });
 
