@@ -123,6 +123,9 @@ const RegisterScreen = ({ navigation }) => {
         <Image source={require('../assets/github_PNG40.png')} style={styles.icon} />
       </TouchableOpacity>
       </View>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+      <Text style={styles.back}>{'<- Back'}</Text>
+    </TouchableOpacity>
     </View>
   );
 };
@@ -213,7 +216,13 @@ const styles = StyleSheet.create({
     padding: 5,
     marginVertical: 10,
     borderRadius: 20,
-    borderColor: '#0066cc',
+    borderColor: '#0066cc', 
+  },
+  back: {
+    fontSize: 20,
+    color: '#0066cc',
+    fontWeight: 'bold',
+    marginLeft: 10,
   },
 });
 
