@@ -17,6 +17,7 @@ import AdminStaff from './screens/admin/AdminStaff';
 import AdminNotifications from './screens/admin/AdminNotification';
 import AdminHome from './screens/admin/adminpages/AdminHome';
 import AdminDepartment from './screens/admin/adminpages/AdminDepartment';
+
 const Stack = createStackNavigator();
 
 export default function App() {

@@ -1,33 +1,89 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, Alert, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from '../firebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const validUserPassword = 'password123';
-  const validAdminPassword = 'admin123';
 
   const userEmailRegex = /^72782\d{1}tuad\d{3}@skct\.edu\.in$/;
 
   const adminEmailRegex = /^[a-zA-Z]+(\.[a-zA-Z]+)?@skct\.edu\.in$/;
 
-  const handleLogin = () => {
-    if (isAdmin) {
-      if (adminEmailRegex.test(email) && password === validAdminPassword) {
-        navigation.navigate('AdminDashboard');
+  const handleLogin = async() => {
+    // try {
+    //   if (isAdmin) {
+    //     // Admin login logic
+    //     if (adminEmailRegex.test(email)) {
+    //       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    //       const user = userCredential.user;
+
+    //       // Check if the user has an admin role in Firestore
+    //       const userRef = doc(db, 'users', user.uid);  // Access user data from Firestore
+    //       const userDoc = await getDoc(userRef);
+          
+    //       if (userDoc.exists() && userDoc.data().role === 'admin') {
+    //         Alert.alert('Login successful', 'Welcome Admin');
+    //         navigation.navigate('AdminDashboard');
+    //       } else {
+    //         Alert.alert('Login failed', 'You are not authorized as an admin');
+    //       }
+    //     } else {
+    //       Alert.alert('Login failed', 'Invalid Admin email format');
+    //     }
+    //   } else {
+    //     // User login logic using Firebase Authentication
+    //     if (userEmailRegex.test(email)) {
+    //       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    //       const user = userCredential.user;
+
+    //       Alert.alert('Login successful', 'Welcome User');
+    //       navigation.navigate('Dashboard');
+    //     } else {
+    //       Alert.alert('Login failed', 'Invalid user email format');
+    //     }
+    //   }
+    // } catch (error) {
+    //   console.error('Login error: ', error);
+    //   Alert.alert('Login failed', 'Invalid email or password');
+    // }
+    try {
+      if (isAdmin) {
+        // Admin login logic
+        if (adminEmailRegex.test(email)) {
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+
+          // Check Firestore for admin role
+          const userRef = doc(db, 'users', user.uid);
+          const userDoc = await getDoc(userRef);
+          
+          if (userDoc.exists() && userDoc.data().role === 'admin') {
+            Alert.alert('Login successful', 'Welcome Admin');
+            navigation.navigate('AdminDashboard');
+          } else {
+            Alert.alert('Login failed', 'You are not authorized as an admin');
+          }
+        } else {
+          Alert.alert('Login failed', 'Invalid Admin email format');
+        }
       } else {
-        Alert.alert('Login failed', 'Invalid Admin email or password');
+        // User login logic
+        if (userEmailRegex.test(email)) {
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          Alert.alert('Login successful', 'Welcome User');
+          navigation.navigate('Dashboard');
+        } else {
+          Alert.alert('Login failed', 'Invalid user email format');
+        }
       }
-    } else {
-      if (userEmailRegex.test(email) && password === validUserPassword) {
-        Alert.alert('Login successful', 'Welcome User');
-        navigation.navigate('Dashboard'); 
-      } else {
-        Alert.alert('Login failed', 'Invalid email or password');
-      }
+    } catch (error) {
+      Alert.alert('Login failed', 'Invalid email or password');
     }
   };
 

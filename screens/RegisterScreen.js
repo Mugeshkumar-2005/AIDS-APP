@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { View, TextInput,  Text, StyleSheet, Alert, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from '../firebaseConfig';  // Import from firebaseConfig.js
+import { setDoc, doc } from 'firebase/firestore';
+
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -13,7 +17,7 @@ const RegisterScreen = ({ navigation }) => {
 
   const adminEmailRegex = /^[a-zA-Z]+(\.[a-zA-Z]+)?@skct\.edu\.in$/;
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (password !== confirmPassword) {
       Alert.alert('Error', 'Passwords do not match');
     } else {
@@ -22,8 +26,24 @@ const RegisterScreen = ({ navigation }) => {
       } else if (!isAdmin && !userEmailRegex.test(email)) {
         Alert.alert('Error', 'Invalid user email format');
       } else {
-        Alert.alert('Success', 'Registration complete');
-        navigation.navigate('Login');  
+        try {
+          // Create user with email and password using Firebase Authentication
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          const user = userCredential.user;
+
+          // Store user details in Firestore
+          await setDoc(doc(db, 'users', user.uid), {
+            name,
+            email,
+            role: isAdmin ? 'admin' : 'user',
+          });
+
+          // If registration is successful, show success message
+          Alert.alert('Success', 'Registration complete');
+          navigation.navigate('Login');
+        } catch (error) {
+          Alert.alert('Error', error.message);
+        }
       }
     }
   };

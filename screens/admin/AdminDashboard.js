@@ -9,8 +9,10 @@ import {
   FlatList,
   ScrollView,
   ImageBackground,
+  Animated,
 } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialIcons'; // Import vector icons
 import ProfileImage from '../../assets/Profile.png';
 import AdminHome from './adminpages/AdminHome';
 import AdminDepartment from './adminpages/AdminDepartment';
@@ -18,6 +20,7 @@ import AdminDepartment from './adminpages/AdminDepartment';
 const DashboardScreen = ({ route, navigation }) => {
   const [profileImage, setProfileImage] = useState(ProfileImage);
   const [isMenuVisible, setMenuVisible] = useState(false);
+  const [menuSlide] = useState(new Animated.Value(-300)); // Initial menu position
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -26,16 +29,24 @@ const DashboardScreen = ({ route, navigation }) => {
     }
   }, [isFocused, route.params?.updatedProfileImage]);
 
+  // Menu items with titles, navigation, and icons
   const menuItems = [
-    { title: 'View Students', navigateTo: 'AdminStudent' },
-    { title: 'View Staff', navigateTo: 'AdminStaff' },
-    { title: 'Log Out', navigateTo: 'Login' },
+    { title: 'View Students', navigateTo: 'AdminStudent', icon: 'school' },
+    { title: 'View Staff', navigateTo: 'AdminStaff', icon: 'groups' },
+    { title: 'Log Out', navigateTo: 'Login', icon: 'logout' },
   ];
 
-  const toggleMenu = () => setMenuVisible(!isMenuVisible);
+  const toggleMenu = () => {
+    setMenuVisible(!isMenuVisible);
+    Animated.timing(menuSlide, {
+      toValue: isMenuVisible ? -300 : 0, // Slide in or out
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  };
 
   const handleMenuItemPress = (navigateTo) => {
-    setMenuVisible(false);
+    toggleMenu();
     navigation.navigate(navigateTo);
   };
 
@@ -43,9 +54,9 @@ const DashboardScreen = ({ route, navigation }) => {
     <ImageBackground
       source={require('../../assets/SKCT-College-Campus-12.jpg')}
       style={styles.backgroundImage}
-      >
+    >
       <View style={styles.container}>
-        {/* Fixed Navbar */}
+        {/* Navbar */}
         <View style={styles.navbar}>
           <Image source={require('../../assets/clg.png')} style={styles.logo} />
           <View style={styles.textContainer}>
@@ -54,19 +65,15 @@ const DashboardScreen = ({ route, navigation }) => {
               An Autonomous Institution | Accredited by NAAC with 'A' Grade
             </Text>
           </View>
+          <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
+            <Text style={styles.menuIcon}>{isMenuVisible ? '✖' : '☰'}</Text>
+          </TouchableOpacity>
         </View>
-
 
         {/* Scrollable Content */}
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <AdminHome />
 
-        <TouchableOpacity onPress={toggleMenu} style={styles.menuButton}>
-          <Text style={styles.menuIcon}>☰</Text>
-        </TouchableOpacity>
-
-      <AdminHome/>
-          
-    
           <View style={styles.main}>
             <TouchableOpacity
               style={styles.card}
@@ -77,12 +84,12 @@ const DashboardScreen = ({ route, navigation }) => {
             <TouchableOpacity
               style={styles.card}
               onPress={() => navigation.navigate('AdminNotifications')}
-              >
+            >
               <Text style={styles.cardText}>Notifications</Text>
             </TouchableOpacity>
           </View>
 
-        <AdminDepartment/>
+          <AdminDepartment />
 
           <View style={styles.infoContainer}>
             <Text style={styles.infoTitle}>Sri Krishna College of Technology</Text>
@@ -95,35 +102,27 @@ const DashboardScreen = ({ route, navigation }) => {
           </View>
         </ScrollView>
 
-        {/* Menu Modal */}
-        {isMenuVisible && (
-          <Modal
-            transparent={true}
-            animationType="fade"
-            visible={isMenuVisible}
-            onRequestClose={() => setMenuVisible(false)}
-          >
-            <TouchableOpacity
-              style={styles.overlay}
-              onPress={() => setMenuVisible(false)}
-            >
-              <View style={styles.menu}>
-                <FlatList
-                  data={menuItems}
-                  keyExtractor={(item) => item.title}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity
-                      style={styles.menuItem}
-                      onPress={() => handleMenuItemPress(item.navigateTo)}
-                    >
-                      <Text style={styles.menuItemText}>{item.title}</Text>
-                    </TouchableOpacity>
-                  )}
+        {/* Sliding Menu */}
+        <Animated.View style={[styles.menu, { left: menuSlide }]}>
+          <FlatList
+            data={menuItems}
+            keyExtractor={(item) => item.title}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => handleMenuItemPress(item.navigateTo)}
+              >
+                <Icon
+                  name={item.icon} // Dynamically set the icon
+                  size={24}
+                  color="#003366" // Customize color
+                  style={styles.menuIconStyle}
                 />
-              </View>
-            </TouchableOpacity>
-          </Modal>
-        )}
+                <Text style={styles.menuItemText}>{item.title}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        </Animated.View>
       </View>
     </ImageBackground>
   );
@@ -141,57 +140,44 @@ const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f8f8f8',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    justifyContent: 'space-between',
+    backgroundColor: '#003366',
     paddingTop: 30,
     paddingBottom: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#fff',
   },
   logo: {
-    width: 70,
-    height: 70,
-    marginRight: 10,
+    width: 60,
+    height: 60,
+  },
+  textContainer: {
+    flex: 1,
+    alignItems: 'center',
+    marginLeft: 10,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#ffffff',
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 10,
+    fontSize: 12,
+    color: '#ffffff',
     textAlign: 'center',
-    color: '#666',
   },
   menuButton: {
-    position: 'absolute',
-    right: 5,
     padding: 10,
   },
   menuIcon: {
-    fontSize: 24,
-    color: '#333',
+    fontSize: 28,
+    color: '#ffffff',
     fontWeight: 'bold',
   },
   scrollViewContent: {
     padding: 20,
-  },
-  infoContainer: {
-    backgroundColor: '#fff',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 20,
-    elevation: 5,
-  },
-  infoTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#003366',
-  },
-  infoText: {
-    fontSize: 14,
-    color: '#333',
-    marginBottom: 5,
   },
   main: {
     marginBottom: 20,
@@ -207,19 +193,19 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
   },
-  overlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
   menu: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 20,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
     width: 250,
+    backgroundColor: '#ffffff',
+    padding: 20,
+    elevation: 10,
+    zIndex: 1,
   },
   menuItem: {
+    flexDirection: 'row', // Align icon and text horizontally
+    alignItems: 'center',
     paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
@@ -227,8 +213,11 @@ const styles = StyleSheet.create({
   menuItemText: {
     fontSize: 16,
     color: '#333',
-    textAlign: 'center',
+    marginLeft: 10, // Add space between icon and text
     fontWeight: 'bold',
+  },
+  menuIconStyle: {
+    marginRight: 10, // Space for consistency
   },
 });
 

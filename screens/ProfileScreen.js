@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import * as ImagePicker from 'expo-image-picker'; // Import ImagePicker for image selection
+import * as ImagePicker from 'expo-image-picker'; 
 
 const ProfileScreen = ({ navigation, route }) => {
   const [name, setName] = useState(route.params?.name ||'John Doe');
   const [email, setEmail] = useState(route.params?.email ||'johndoe@example.com');
-  const [profileImage, setProfileImage] = useState(route.params?.currentImage || null); // Use passed image if available
+  const [profileImage, setProfileImage] = useState(route.params?.currentImage || null); 
 
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -23,8 +23,8 @@ const ProfileScreen = ({ navigation, route }) => {
     });
 
     if (!result.canceled) {
-      setProfileImage(result.assets[0].uri); // Set the selected image URI
-      console.log("Selected image URI:", result.assets[0].uri); // Log the selected image URI for debugging
+      setProfileImage(result.assets[0].uri);
+      console.log("Selected image URI:", result.assets[0].uri); 
     }
   };
 

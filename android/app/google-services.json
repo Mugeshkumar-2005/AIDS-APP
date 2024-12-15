@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "648078854050",
+    "project_id": "skct-aids-efe29",
+    "storage_bucket": "skct-aids-efe29.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648078854050:android:2b01154de1b7f4bd9a54fb",
+        "android_client_info": {
+          "package_name": "AndroidManifest.xml"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648078854050-q5i0tj79atl1dgmtnt10i44hlvp81g0u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADsYulijJfBoPWZIOQvnSEkeTjNYasl8o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648078854050-q5i0tj79atl1dgmtnt10i44hlvp81g0u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
